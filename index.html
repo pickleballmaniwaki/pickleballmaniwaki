@@ -301,11 +301,12 @@ footer .copy{width:100%;font-size:14px;border-top:1px solid #1d3463;padding-top:
       <p><b>Pickleball Maniwaki</b><br><span data-i="kA">Maniwaki (Québec)</span></p>
       <p class="mail"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg><a href="mailto:pickleballmaniwaki@proton.me">pickleballmaniwaki@proton.me</a></p>
     </div>
-    <form id="form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
-      <input type="hidden" name="form-name" value="contact">
-      <p hidden><label>Ne pas remplir <input name="bot-field"></label></p>
+    <form id="form" action="https://formsubmit.co/pickleballmaniwaki@proton.me" method="POST" novalidate>
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_captcha" value="false">
+      <p hidden><label>Ne pas remplir <input name="_honey" tabindex="-1" autocomplete="off"></label></p>
       <label><span data-i="lN">Nom</span><input id="f-nom" name="nom" autocomplete="name" required></label>
-      <label><span data-i="lE">Courriel</span><input id="f-mail" name="courriel" type="email" autocomplete="email" required></label>
+      <label><span data-i="lE">Courriel</span><input id="f-mail" name="email" type="email" autocomplete="email" required></label>
       <label><span data-i="lS">Je souhaite…</span>
         <select id="f-sujet" name="sujet">
           <option data-i="o1">Essayer le pickleball</option>
@@ -466,11 +467,15 @@ footer .copy{width:100%;font-size:14px;border-top:1px solid #1d3463;padding-top:
     err.textContent = '';
     const label = send.textContent;
     send.disabled = true; send.textContent = TXT[lang].sending;
-    const data = new URLSearchParams(new FormData(form));
+    const data = Object.fromEntries(new FormData(form));
+    data._subject = 'Site web Pickleball Maniwaki — ' + document.getElementById('f-sujet').value;
+    data._replyto = mail;
+    data.langue = lang === 'fr' ? 'Français' : 'English';
     let sent = false;
     try {
-      const r = await fetch('/', { method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body:data.toString() });
-      sent = r.ok;
+      const r = await fetch('https://formsubmit.co/ajax/' + MAIL, { method:'POST', headers:{'Content-Type':'application/json','Accept':'application/json'}, body:JSON.stringify(data) });
+      const j = await r.json().catch(() => ({}));
+      sent = r.ok && String(j.success) === 'true';
     } catch(x) { sent = false; }
     send.disabled = false; send.textContent = label;
     if (sent) { ok.classList.add('show'); form.reset(); return; }
