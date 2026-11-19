@@ -377,8 +377,8 @@ footer .copy{width:100%;font-size:14px;border-top:1px solid #1d3463;padding-top:
     foot:"Footer"
   };
   const TXT = {
-    fr:{err:"Veuillez indiquer votre nom et une adresse courriel valide.", sending:"Envoi…", fail:"Le message n'a pas pu être envoyé d'ici. Écrivez-nous directement à ", failLink:"ouvrir votre courriel", btn:"EN", btnL:"English version", title:"Pickleball Maniwaki — Club de pickleball"},
-    en:{err:"Please enter your name and a valid email address.", sending:"Sending…", fail:"The message couldn't be sent from here. Write to us directly at ", failLink:"open your email", btn:"FR", btnL:"Version française", title:"Pickleball Maniwaki — Pickleball club"}
+    fr:{err:"Veuillez indiquer votre nom et une adresse courriel valide.", sending:"Envoi…", fail:"Le message n'a pas pu être envoyé d'ici. Écrivez-nous directement à ", failLink:"ouvrir votre courriel", detail:"Détail :", btn:"EN", btnL:"English version", title:"Pickleball Maniwaki — Club de pickleball"},
+    en:{err:"Please enter your name and a valid email address.", sending:"Sending…", fail:"The message couldn't be sent from here. Write to us directly at ", failLink:"open your email", detail:"Detail:", btn:"FR", btnL:"Version française", title:"Pickleball Maniwaki — Pickleball club"}
   };
   const SCHED = {
     hiver: [
@@ -471,18 +471,20 @@ footer .copy{width:100%;font-size:14px;border-top:1px solid #1d3463;padding-top:
     data._subject = 'Site web Pickleball Maniwaki — ' + document.getElementById('f-sujet').value;
     data._replyto = mail;
     data.langue = lang === 'fr' ? 'Français' : 'English';
-    let sent = false;
+    let sent = false, why = '';
     try {
       const r = await fetch('https://formsubmit.co/ajax/' + MAIL, { method:'POST', headers:{'Content-Type':'application/json','Accept':'application/json'}, body:JSON.stringify(data) });
       const j = await r.json().catch(() => ({}));
       sent = r.ok && String(j.success) === 'true';
-    } catch(x) { sent = false; }
+      if (!sent) why = j.message || ('HTTP ' + r.status);
+    } catch(x) { sent = false; why = (x && x.message) || 'network'; }
     send.disabled = false; send.textContent = label;
     if (sent) { ok.classList.add('show'); form.reset(); return; }
     const sujet = document.getElementById('f-sujet').value;
     const body = `${document.getElementById('f-msg').value}\n\n— ${nom} (${mail})`;
     const href = `mailto:${MAIL}?subject=${encodeURIComponent('Pickleball Maniwaki — ' + sujet)}&body=${encodeURIComponent(body)}`;
-    ko.innerHTML = `${TXT[lang].fail}<b>${MAIL}</b> — <a href="${href}">${TXT[lang].failLink}</a>`;
+    const esc = t => String(t).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+    ko.innerHTML = `${TXT[lang].fail}<b>${MAIL}</b> — <a href="${href}">${TXT[lang].failLink}</a><br><small style="opacity:.75">${TXT[lang].detail} ${esc(why)}</small>`;
     ko.classList.add('show');
   });
 }
