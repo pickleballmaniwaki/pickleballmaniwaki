@@ -132,6 +132,12 @@ textarea{min-height:120px;resize:vertical}
 .ok{display:none;background:#e6f6ec;color:#14532d;border-radius:12px;padding:14px 16px;font-weight:700}
 :root[data-theme=dark] .ok{background:#123b25;color:#c9f2d6}
 .ok.show{display:block}
+.ko{display:none;background:#fdecea;color:#7f1d1d;border-radius:12px;padding:14px 16px;font-weight:600}
+:root[data-theme=dark] .ko{background:#3b1414;color:#f8d4d4}
+.ko.show{display:block}.ko a{font-weight:800}
+.mail{display:flex;gap:10px;align-items:center;font-size:18px;font-weight:700;flex-wrap:wrap}
+.mail svg{flex:none;color:var(--blue)}.mail a{overflow-wrap:anywhere}
+button[disabled]{opacity:.6;cursor:wait}
 .err{color:#c62828;font-size:14px;min-height:1em}
 @media(max-width:760px){.contact .wrap{grid-template-columns:minmax(0,1fr)}}
 
@@ -293,9 +299,11 @@ footer .copy{width:100%;font-size:14px;border-top:1px solid #1d3463;padding-top:
       <h2 data-i="kH">Nous joindre</h2>
       <p class="lead" data-i="kL">Une question, envie d'essayer ou de vous impliquer comme bénévole? Écrivez-nous et un membre du comité vous répondra.</p>
       <p><b>Pickleball Maniwaki</b><br><span data-i="kA">Maniwaki (Québec)</span></p>
-      <p class="sample" data-i="kN">Ajoutez ici l'adresse courriel, le téléphone et la page Facebook du club.</p>
+      <p class="mail"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg><a href="mailto:pickleballmaniwaki@proton.me">pickleballmaniwaki@proton.me</a></p>
     </div>
-    <form id="form" novalidate>
+    <form id="form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+      <input type="hidden" name="form-name" value="contact">
+      <p hidden><label>Ne pas remplir <input name="bot-field"></label></p>
       <label><span data-i="lN">Nom</span><input id="f-nom" name="nom" autocomplete="name" required></label>
       <label><span data-i="lE">Courriel</span><input id="f-mail" name="courriel" type="email" autocomplete="email" required></label>
       <label><span data-i="lS">Je souhaite…</span>
@@ -308,8 +316,9 @@ footer .copy{width:100%;font-size:14px;border-top:1px solid #1d3463;padding-top:
       </label>
       <label><span data-i="lM">Message</span><textarea id="f-msg" name="message"></textarea></label>
       <div class="err" id="err"></div>
-      <button class="btn y" type="submit" data-i="bS">Préparer mon message</button>
-      <div class="ok" id="ok" data-i="ok">Merci! Votre message est prêt. Ce formulaire est une démonstration : il n'envoie rien pour l'instant. Il pourra être relié à l'adresse courriel du club.</div>
+      <button class="btn y" type="submit" id="send" data-i="bS">Envoyer</button>
+      <div class="ok" id="ok" role="status" data-i="ok">Merci! Votre message a bien été envoyé. Nous vous répondrons bientôt.</div>
+      <div class="ko" id="ko" role="alert"></div>
     </form>
   </div>
 </section>
@@ -359,16 +368,16 @@ footer .copy{width:100%;font-size:14px;border-top:1px solid #1d3463;padding-top:
     q3:"Do I need a partner?", a3:"No. During open play, players rotate and switch partners every game.",
     q4:"Is it a sport for all ages?", a4:"Yes. The court is small and rallies are easier on the joints than tennis, which makes it popular with every generation.",
     kH:"Contact us", kL:"A question, want to try it, or interested in volunteering? Write to us and a committee member will get back to you.",
-    kA:"Maniwaki (Quebec)", kN:"Add the club's email, phone number and Facebook page here.",
+    kA:"Maniwaki (Quebec)", 
     lN:"Name", lE:"Email", lS:"I'd like to…", lM:"Message",
     o1:"Try pickleball", o2:"Know the schedule and rates", o3:"Volunteer", o4:"Other question",
-    bS:"Prepare my message",
-    ok:"Thank you! Your message is ready. This form is a demo: it doesn't send anything yet. It can be connected to the club's email address.",
+    bS:"Send",
+    ok:"Thank you! Your message has been sent. We'll get back to you soon.",
     foot:"Footer"
   };
   const TXT = {
-    fr:{err:"Veuillez indiquer votre nom et une adresse courriel valide.", btn:"EN", btnL:"English version", title:"Pickleball Maniwaki — Club de pickleball"},
-    en:{err:"Please enter your name and a valid email address.", btn:"FR", btnL:"Version française", title:"Pickleball Maniwaki — Pickleball club"}
+    fr:{err:"Veuillez indiquer votre nom et une adresse courriel valide.", sending:"Envoi…", fail:"Le message n'a pas pu être envoyé d'ici. Écrivez-nous directement à ", failLink:"ouvrir votre courriel", btn:"EN", btnL:"English version", title:"Pickleball Maniwaki — Club de pickleball"},
+    en:{err:"Please enter your name and a valid email address.", sending:"Sending…", fail:"The message couldn't be sent from here. Write to us directly at ", failLink:"open your email", btn:"FR", btnL:"Version française", title:"Pickleball Maniwaki — Pickleball club"}
   };
   const SCHED = {
     hiver: [
@@ -445,14 +454,31 @@ footer .copy{width:100%;font-size:14px;border-top:1px solid #1d3463;padding-top:
   mb.addEventListener('click', () => { const o = nav.classList.toggle('open'); mb.setAttribute('aria-expanded', o); });
   document.querySelectorAll('#links a').forEach(a => a.addEventListener('click', () => { nav.classList.remove('open'); mb.setAttribute('aria-expanded', false); }));
 
-  document.getElementById('form').addEventListener('submit', e => {
+  const MAIL = 'pickleballmaniwaki@proton.me';
+  const form = document.getElementById('form');
+  form.addEventListener('submit', async e => {
     e.preventDefault();
     const nom = document.getElementById('f-nom').value.trim();
     const mail = document.getElementById('f-mail').value.trim();
-    const err = document.getElementById('err');
+    const err = document.getElementById('err'), ok = document.getElementById('ok'), ko = document.getElementById('ko'), send = document.getElementById('send');
+    ok.classList.remove('show'); ko.classList.remove('show');
     if (!nom || !/^\S+@\S+\.\S+$/.test(mail)) { err.textContent = TXT[lang].err; return; }
     err.textContent = '';
-    document.getElementById('ok').classList.add('show');
+    const label = send.textContent;
+    send.disabled = true; send.textContent = TXT[lang].sending;
+    const data = new URLSearchParams(new FormData(form));
+    let sent = false;
+    try {
+      const r = await fetch('/', { method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body:data.toString() });
+      sent = r.ok;
+    } catch(x) { sent = false; }
+    send.disabled = false; send.textContent = label;
+    if (sent) { ok.classList.add('show'); form.reset(); return; }
+    const sujet = document.getElementById('f-sujet').value;
+    const body = `${document.getElementById('f-msg').value}\n\n— ${nom} (${mail})`;
+    const href = `mailto:${MAIL}?subject=${encodeURIComponent('Pickleball Maniwaki — ' + sujet)}&body=${encodeURIComponent(body)}`;
+    ko.innerHTML = `${TXT[lang].fail}<b>${MAIL}</b> — <a href="${href}">${TXT[lang].failLink}</a>`;
+    ko.classList.add('show');
   });
 }
 </script>
