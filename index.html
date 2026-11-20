@@ -301,7 +301,7 @@ footer .copy{width:100%;font-size:14px;border-top:1px solid #1d3463;padding-top:
       <p><b>Pickleball Maniwaki</b><br><span data-i="kA">Maniwaki (Québec)</span></p>
       <p class="mail"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg><a href="mailto:pickleballmaniwaki@proton.me">pickleballmaniwaki@proton.me</a></p>
     </div>
-    <form id="form" action="https://formsubmit.co/pickleballmaniwaki@proton.me" method="POST" novalidate>
+    <form id="form" action="https://api.web3forms.com/submit" method="POST" novalidate>
       <input type="hidden" name="_template" value="table">
       <input type="hidden" name="_captcha" value="false">
       <p hidden><label>Ne pas remplir <input name="_honey" tabindex="-1" autocomplete="off"></label></p>
@@ -456,6 +456,8 @@ footer .copy{width:100%;font-size:14px;border-top:1px solid #1d3463;padding-top:
   document.querySelectorAll('#links a').forEach(a => a.addEventListener('click', () => { nav.classList.remove('open'); mb.setAttribute('aria-expanded', false); }));
 
   const MAIL = 'pickleballmaniwaki@proton.me';
+  // Clé Web3Forms (reçue par courriel sur web3forms.com). Vide = FormSubmit.
+  const W3F_KEY = 'f518fd7a-3a0c-4bac-be05-2547a474a8dd';
   const form = document.getElementById('form');
   form.addEventListener('submit', async e => {
     e.preventDefault();
@@ -473,7 +475,13 @@ footer .copy{width:100%;font-size:14px;border-top:1px solid #1d3463;padding-top:
     data.langue = lang === 'fr' ? 'Français' : 'English';
     let sent = false, why = '';
     try {
-      const r = await fetch('https://formsubmit.co/ajax/' + MAIL, { method:'POST', headers:{'Content-Type':'application/json','Accept':'application/json'}, body:JSON.stringify(data) });
+      let url = 'https://formsubmit.co/ajax/' + MAIL;
+      if (W3F_KEY) {
+        url = 'https://api.web3forms.com/submit';
+        data.access_key = W3F_KEY; data.subject = data._subject; data.replyto = mail; data.from_name = nom; data.botcheck = data._honey || '';
+        for (const k of ['_subject','_replyto','_honey','_template','_captcha']) delete data[k];
+      }
+      const r = await fetch(url, { method:'POST', headers:{'Content-Type':'application/json','Accept':'application/json'}, body:JSON.stringify(data) });
       const j = await r.json().catch(() => ({}));
       sent = r.ok && String(j.success) === 'true';
       if (!sent) why = j.message || ('HTTP ' + r.status);
