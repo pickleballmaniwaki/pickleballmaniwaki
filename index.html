@@ -95,6 +95,23 @@ header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--navy)
 .court{margin-top:28px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px}
 .court svg{display:block;width:100%;height:auto;max-height:320px}
 
+/* Astuces */
+.tips{background:light-dark(#fff7d1,#0b1c40)}
+.tipgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(270px,100%),1fr));gap:14px;margin-top:10px}
+.tip{display:flex;gap:14px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px}
+.tip .tb{flex:none}.tip h3{margin:2px 0 4px}.tip p{margin:0;color:var(--muted)}
+/* Engagement */
+.engage{display:grid;grid-template-columns:auto minmax(0,1fr);gap:clamp(18px,4vw,40px);background:var(--card);border:3px solid var(--navy);border-radius:24px;padding:clamp(20px,4vw,40px)}
+:root[data-theme=dark] .engage{border-color:var(--blue)}
+.engage .doc{flex:none}
+.musts{list-style:none;padding:0;margin:0 0 20px;display:grid;gap:8px}
+.musts li{padding-left:30px;position:relative}
+.musts li::before{content:"";position:absolute;left:0;top:.35em;width:18px;height:18px;border-radius:50%;background:var(--yellow);box-shadow:inset 0 0 0 5px var(--navy)}
+.dl{display:flex;gap:12px;flex-wrap:wrap}
+.btn.n{background:var(--navy);color:#fff}
+@media(max-width:600px){.engage{grid-template-columns:minmax(0,1fr)}.engage .doc{width:64px;height:auto}}
+.where{display:flex;gap:12px;align-items:flex-start;margin-top:22px;color:#dbe7ff}
+.where svg{flex:none;color:var(--yellow);margin-top:3px}.where a{color:var(--yellow);font-weight:700}
 /* Adhésion */
 .plans{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr));gap:18px;margin-top:10px;max-width:820px}
 .plan{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:26px;display:flex;flex-direction:column}
@@ -158,7 +175,7 @@ footer .copy{width:100%;font-size:14px;border-top:1px solid #1d3463;padding-top:
     <nav class="links" id="links">
       <a href="#club" data-i="n1">Le club</a>
       <a href="#horaire" data-i="n2">Horaire</a>
-      <a href="#debuter" data-i="n3">Débuter</a>
+      <a href="#debuter" data-i="n3">Débuter</a><a href="#astuces" data-i="n7">Astuces</a>
       <a href="#tarifs" data-i="n4">Tarifs</a>
       <a href="#evenements" data-i="n5">Événements</a>
       <a href="#contact" data-i="n6">Contact</a>
@@ -200,9 +217,9 @@ footer .copy{width:100%;font-size:14px;border-top:1px solid #1d3463;padding-top:
 
 <div class="facts">
   <div class="wrap">
-    <div><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span data-i="f1">Parties libres plusieurs fois par semaine</span></div>
+    <div><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span data-i="f1">Mardi 19 h – 21 h (hiver)</span></div>
     <div><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20c0-3.5 2.7-6 6-6s6 2.5 6 6M15 20c0-2.5 1-4.5 4-4.5"/></svg><span data-i="f2">Première visite gratuite, sans abonnement</span></div>
-    <div><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M12 21s-7-6.5-7-12a7 7 0 0 1 14 0c0 5.5-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg><span data-i="f3">Maniwaki, Québec</span></div>
+    <div><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M12 21s-7-6.5-7-12a7 7 0 0 1 14 0c0 5.5-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg><span data-i="f3">Cité étudiante de la Haute-Gatineau, Maniwaki</span></div>
   </div>
 </div>
 
@@ -225,13 +242,13 @@ footer .copy{width:100%;font-size:14px;border-top:1px solid #1d3463;padding-top:
 <section class="band sched" id="horaire">
   <div class="wrap">
     <h2 data-i="sH">Horaire des parties</h2>
-    <p class="lead" data-i="sL">Présentez-vous quelques minutes avant le début. Les terrains sont partagés en rotation pour que tout le monde joue.</p>
+    <p class="lead" data-i="sL">Arrivez au moins 15 minutes avant le début pour changer de chaussures. Les terrains sont partagés en rotation pour que tout le monde joue.</p>
     <div class="tabs" role="tablist" data-ia="aria-label:season" aria-label="Saison">
       <button class="tab" role="tab" aria-selected="true" data-s="hiver" data-i="tW">Hiver (intérieur)</button>
       <button class="tab" role="tab" aria-selected="false" data-s="ete" data-i="tS">Été (extérieur)</button>
     </div>
     <ul class="slots" id="slots" aria-live="polite"></ul>
-    <p class="note" data-i="sN">Horaire et lieux donnés à titre d'exemple — à remplacer par l'horaire officiel du club.</p>
+    <p class="where"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M12 21s-7-6.5-7-12a7 7 0 0 1 14 0c0 5.5-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg><span><b>Cité étudiante de la Haute-Gatineau</b><br>211, rue Henri-Bourassa, Maniwaki (<span data-i="qc">Québec</span>) J9E 1E4<br><a href="https://www.google.com/maps/search/?api=1&amp;query=211+rue+Henri-Bourassa+Maniwaki+QC+J9E+1E4" data-i="map">Voir sur la carte</a></span></p>
   </div>
 </section>
 
@@ -265,12 +282,52 @@ footer .copy{width:100%;font-size:14px;border-top:1px solid #1d3463;padding-top:
   </div>
 </section>
 
-<section class="band" id="tarifs" style="padding-top:0">
+<section class="band tips" id="astuces">
+  <div class="wrap">
+    <h2 data-i="tH">Trucs et astuces</h2>
+    <p class="lead" data-i="tL">Quelques conseils pour progresser rapidement, que vous jouiez depuis une semaine ou depuis un an.</p>
+    <div class="tipgrid">
+      <div class="tip"><svg class="tb" width="34" height="34" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#ffd21f"/><g fill="#0a2350"><circle cx="8" cy="8.5" r="1.4"/><circle cx="15" cy="7.5" r="1.4"/><circle cx="12" cy="12.5" r="1.4"/><circle cx="7.5" cy="15.5" r="1.4"/><circle cx="16" cy="15" r="1.4"/></g></svg><div><h3 data-i="t1h">Restez prêt</h3><p data-i="t1p">Raquette haute devant vous, genoux légèrement fléchis, poids sur l'avant des pieds. Vous réagirez beaucoup plus vite.</p></div></div>
+      <div class="tip"><svg class="tb" width="34" height="34" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#ffd21f"/><g fill="#0a2350"><circle cx="8" cy="8.5" r="1.4"/><circle cx="15" cy="7.5" r="1.4"/><circle cx="12" cy="12.5" r="1.4"/><circle cx="7.5" cy="15.5" r="1.4"/><circle cx="16" cy="15" r="1.4"/></g></svg><div><h3 data-i="t2h">Montez à la cuisine</h3><p data-i="t2p">Après le retour de service, avancez vers la ligne de non-volée. C'est là que se gagnent la plupart des points.</p></div></div>
+      <div class="tip"><svg class="tb" width="34" height="34" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#ffd21f"/><g fill="#0a2350"><circle cx="8" cy="8.5" r="1.4"/><circle cx="15" cy="7.5" r="1.4"/><circle cx="12" cy="12.5" r="1.4"/><circle cx="7.5" cy="15.5" r="1.4"/><circle cx="16" cy="15" r="1.4"/></g></svg><div><h3 data-i="t3h">Retournez long</h3><p data-i="t3p">Un retour de service profond garde vos adversaires au fond du terrain et vous laisse le temps d'avancer.</p></div></div>
+      <div class="tip"><svg class="tb" width="34" height="34" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#ffd21f"/><g fill="#0a2350"><circle cx="8" cy="8.5" r="1.4"/><circle cx="15" cy="7.5" r="1.4"/><circle cx="12" cy="12.5" r="1.4"/><circle cx="7.5" cy="15.5" r="1.4"/><circle cx="16" cy="15" r="1.4"/></g></svg><div><h3 data-i="t4h">Apprivoisez l'amorti</h3><p data-i="t4p">Le « dink » est un coup doux qui retombe dans la cuisine adverse. Patience : attendez une balle haute avant d'attaquer.</p></div></div>
+      <div class="tip"><svg class="tb" width="34" height="34" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#ffd21f"/><g fill="#0a2350"><circle cx="8" cy="8.5" r="1.4"/><circle cx="15" cy="7.5" r="1.4"/><circle cx="12" cy="12.5" r="1.4"/><circle cx="7.5" cy="15.5" r="1.4"/><circle cx="16" cy="15" r="1.4"/></g></svg><div><h3 data-i="t5h">Le 3e coup amorti</h3><p data-i="t5p">L'équipe au service joue souvent un coup doux dans la cuisine adverse pour pouvoir monter au filet.</p></div></div>
+      <div class="tip"><svg class="tb" width="34" height="34" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#ffd21f"/><g fill="#0a2350"><circle cx="8" cy="8.5" r="1.4"/><circle cx="15" cy="7.5" r="1.4"/><circle cx="12" cy="12.5" r="1.4"/><circle cx="7.5" cy="15.5" r="1.4"/><circle cx="16" cy="15" r="1.4"/></g></svg><div><h3 data-i="t6h">Visez les pieds</h3><p data-i="t6p">Une balle basse, aux pieds de l'adversaire, est très difficile à attaquer.</p></div></div>
+      <div class="tip"><svg class="tb" width="34" height="34" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#ffd21f"/><g fill="#0a2350"><circle cx="8" cy="8.5" r="1.4"/><circle cx="15" cy="7.5" r="1.4"/><circle cx="12" cy="12.5" r="1.4"/><circle cx="7.5" cy="15.5" r="1.4"/><circle cx="16" cy="15" r="1.4"/></g></svg><div><h3 data-i="t7h">Parlez-vous</h3><p data-i="t7p">« À moi! », « À toi! », « Sortie! » : communiquez sur chaque balle. Au centre, c'est souvent le coup droit qui prend.</p></div></div>
+      <div class="tip"><svg class="tb" width="34" height="34" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#ffd21f"/><g fill="#0a2350"><circle cx="8" cy="8.5" r="1.4"/><circle cx="15" cy="7.5" r="1.4"/><circle cx="12" cy="12.5" r="1.4"/><circle cx="7.5" cy="15.5" r="1.4"/><circle cx="16" cy="15" r="1.4"/></g></svg><div><h3 data-i="t8h">Bougez ensemble</h3><p data-i="t8p">Avec votre partenaire, avancez et reculez comme si vous étiez reliés par une corde, pour ne pas laisser de trou au centre.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="tarifs">
   <div class="wrap">
     <h2 data-i="pH">Tarifs</h2>
     <p class="lead" data-i="pL">Pas d'abonnement : votre première visite est gratuite, ensuite vous payez seulement quand vous jouez.</p>
     <div class="plans" id="plans"></div>
-    <p class="sample" data-i="pN">Tarifs donnés à titre d'exemple — à confirmer par le club.</p>
+    <p class="sample" data-i="pN">Tous les joueurs doivent signer le <a href="#engagement">formulaire d'engagement et code de conduite</a>.</p>
+  </div>
+</section>
+
+<section class="band" id="engagement" style="padding-top:0">
+  <div class="wrap">
+    <div class="engage">
+      <svg class="doc" width="88" height="108" viewBox="0 0 88 108" aria-hidden="true"><path d="M8 4h52l24 24v72a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V8a4 4 0 0 1 4-4z" fill="#fff" stroke="#0a2350" stroke-width="4"/><path d="M60 4v24h24" fill="#ffd21f" stroke="#0a2350" stroke-width="4" stroke-linejoin="round"/><g stroke="#1e7fe0" stroke-width="5" stroke-linecap="round"><path d="M18 44h50M18 58h50M18 72h34"/></g><path d="M18 90c8-8 12 4 18-2s8-6 14 0" fill="none" stroke="#0a2350" stroke-width="3.5" stroke-linecap="round"/></svg>
+      <div>
+        <h2 data-i="gH">Formulaire d'engagement et code de conduite</h2>
+        <p class="lead" data-i="gL">Chaque joueur doit lire et signer ce formulaire avant de jouer. Imprimez-le, signez-le et remettez-le à un organisateur à votre première séance.</p>
+        <ul class="musts">
+          <li data-i="g1"><b>Lunettes de protection</b> obligatoires sur le terrain</li>
+          <li data-i="g2"><b>Chaussures d'intérieur</b> propres à semelle non marquante — aucune chaussure d'extérieur sur les terrains</li>
+          <li data-i="g3"><b>Arrivée 15 minutes avant</b> et absence signalée 24 h à l'avance</li>
+          <li data-i="g4"><b>Appels honnêtes</b> : en cas de doute, le point va à l'adversaire</li>
+        </ul>
+        <div class="dl">
+          <a class="btn y" href="formulaire-engagement-pickleball-maniwaki.pdf" download data-i="gP">Télécharger (PDF)</a>
+          <a class="btn n" href="formulaire-engagement-pickleball-maniwaki.docx" download data-i="gW">Télécharger (Word)</a>
+        </div>
+        <p class="sample" data-i="gN">Le formulaire est bilingue (français et anglais). Pour un joueur mineur, un parent ou tuteur doit aussi signer.</p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -287,7 +344,8 @@ footer .copy{width:100%;font-size:14px;border-top:1px solid #1d3463;padding-top:
     <h2 data-i="qH">Questions fréquentes</h2>
     <details><summary data-i="q1">Je n'ai jamais joué. Est-ce que je peux venir?</summary><p data-i="a1">Absolument! Venez à une séance d'initiation : un bénévole vous expliquera les règles et vous jouerez dès la première heure.</p></details>
     <details><summary data-i="q5">Combien ça coûte?</summary><p data-i="a5">Votre première visite est gratuite. Ensuite, vous payez à la séance, sans abonnement ni engagement.</p></details>
-    <details><summary data-i="q2">Quel équipement dois-je apporter?</summary><p data-i="a2">Des espadrilles de sport à semelle non marquante et une bouteille d'eau. Des raquettes et des balles sont prêtées aux nouveaux joueurs.</p></details>
+    <details><summary data-i="q6">Dois-je signer un formulaire?</summary><p data-i="a6">Oui. Chaque joueur doit lire et signer le <a href="#engagement">formulaire d'engagement et code de conduite</a> avant de jouer. Pour un joueur mineur, un parent ou tuteur signe aussi.</p></details>
+    <details><summary data-i="q2">Quel équipement dois-je apporter?</summary><p data-i="a2">Des lunettes de protection pour sports de raquette (obligatoires), une paire d'espadrilles d'intérieur propres à semelle non marquante (on ne joue pas avec ses chaussures d'extérieur) et une bouteille d'eau. Des raquettes et des balles sont prêtées aux nouveaux joueurs.</p></details>
     <details><summary data-i="q3">Faut-il avoir un partenaire?</summary><p data-i="a3">Non. Lors des parties libres, les joueurs font la rotation et changent de partenaire à chaque partie.</p></details>
     <details><summary data-i="q4">Est-ce un sport pour tous les âges?</summary><p data-i="a4">Oui. Le terrain est petit et les échanges sont moins exigeants pour les articulations que le tennis, ce qui en fait un sport populaire auprès de toutes les générations.</p></details>
   </div>
@@ -298,8 +356,8 @@ footer .copy{width:100%;font-size:14px;border-top:1px solid #1d3463;padding-top:
     <div>
       <h2 data-i="kH">Nous joindre</h2>
       <p class="lead" data-i="kL">Une question, envie d'essayer ou de vous impliquer comme bénévole? Écrivez-nous et un membre du comité vous répondra.</p>
-      <p><b>Pickleball Maniwaki</b><br><span data-i="kA">Maniwaki (Québec)</span></p>
-      <p class="mail"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg><a href="mailto:pickleballmaniwaki@proton.me">pickleballmaniwaki@proton.me</a></p>
+      <p><b>Pickleball Maniwaki</b><br>Cité étudiante de la Haute-Gatineau<br>211, rue Henri-Bourassa<br>Maniwaki (<span data-i="qc">Québec</span>) J9E 1E4</p>
+      <p class="mail"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg><a href="mailto:pickleballmaniwaki@mail.com">pickleballmaniwaki@mail.com</a></p>
     </div>
     <form id="form" action="https://api.web3forms.com/submit" method="POST" novalidate>
       <input type="hidden" name="_template" value="table">
@@ -328,7 +386,7 @@ footer .copy{width:100%;font-size:14px;border-top:1px solid #1d3463;padding-top:
   <div class="wrap">
     <img src="logo-sm.webp" alt="Pickleball Maniwaki" width="138" height="92">
     <nav data-ia="aria-label:foot" aria-label="Pied de page">
-      <a href="#club" data-i="n1">Le club</a><a href="#horaire" data-i="n2">Horaire</a><a href="#debuter" data-i="n3">Débuter</a><a href="#tarifs" data-i="n4">Tarifs</a><a href="#evenements" data-i="n5">Événements</a><a href="#contact" data-i="n6">Contact</a>
+      <a href="#club" data-i="n1">Le club</a><a href="#horaire" data-i="n2">Horaire</a><a href="#debuter" data-i="n3">Débuter</a><a href="#astuces" data-i="n7">Astuces</a><a href="#tarifs" data-i="n4">Tarifs</a><a href="#evenements" data-i="n5">Événements</a><a href="#contact" data-i="n6">Contact</a>
     </nav>
     <div class="copy">© 2026 Pickleball Maniwaki · <span class="script" style="font-size:18px">Le plaisir du jeu. L'esprit d'équipe.</span> <span lang="en" style="opacity:.8">· The joy of the game. The spirit of the team.</span></div>
   </div>
@@ -337,11 +395,11 @@ footer .copy{width:100%;font-size:14px;border-top:1px solid #1d3463;padding-top:
 <script>
 {
   const EN = {
-    home:"Home", n1:"The club", n2:"Schedule", n3:"Get started", n4:"Rates", n5:"Events", n6:"Contact",
+    home:"Home", n1:"The club", n2:"Schedule", n3:"Get started", n4:"Rates", n5:"Events", n6:"Contact", n7:"Tips",
     logoAlt:"Pickleball Maniwaki logo — The joy of the game. The spirit of the team.",
     heroP:"The pickleball club of Maniwaki, in the heart of the Haute-Gatineau.<br>All ages, all levels — come try it, we'll lend you a paddle!",
     cta1:"See the schedule", cta2:"See our rates",
-    f1:"Open play several times a week", f2:"First visit free, no membership needed", f3:"Maniwaki, Quebec",
+    f1:"Tuesdays 7–9 pm (winter)", f2:"First visit free, no membership needed", f3:"Cité étudiante de la Haute-Gatineau, Maniwaki",
     aH:"The joy of the game, the spirit of the team",
     aL:"Pickleball Maniwaki brings together local players who share one passion: a sport that's easy to learn, social and seriously addictive.",
     aP:"Whether you're an active retiree, a parent looking for an activity, a former tennis player or just curious, there's a place for you here. Our volunteers organize open play, beginner nights and a few friendly tournaments throughout the season.",
@@ -349,9 +407,9 @@ footer .copy{width:100%;font-size:14px;border-top:1px solid #1d3463;padding-top:
     v1h:"Accessible", v1p:"No equipment or experience needed. Loaner paddles available on site.",
     v2h:"Social", v2p:"We play doubles, rotate partners and get to know each other.",
     v3h:"Local", v3p:"A club born in Maniwaki, between the forest and the Gatineau River.",
-    sH:"Play schedule", sL:"Arrive a few minutes before the start. Courts are shared in rotation so everyone gets to play.",
+    sH:"Play schedule", sL:"Arrive at least 15 minutes before the start to change your shoes. Courts are shared in rotation so everyone gets to play.",
     season:"Season", tW:"Winter (indoor)", tS:"Summer (outdoor)",
-    sN:"Sample schedule and locations — to be replaced with the club's official schedule.",
+    qc:"Quebec", map:"View on map",
     dH:"Getting started", dL:"A mix of tennis, badminton and ping-pong, played on a small court with a perforated ball. The basic rules fit in four points.",
     r1h:"Underhand serve", r1p:"Serve diagonally with an upward arm motion, making contact below the waist.",
     r2h:"The two-bounce rule", r2p:"The return of serve and the next shot must each bounce once before being hit. After that, volleys are allowed.",
@@ -360,21 +418,28 @@ footer .copy{width:100%;font-size:14px;border-top:1px solid #1d3463;padding-top:
     courtAlt:"Diagram of a 20 by 44 foot pickleball court, with the net in the middle and the 7-foot kitchen on each side",
     cK:"Kitchen", cS:"Service area", cN:"Net · 20 × 44 ft court",
     pH:"Rates", pL:"No membership: your first visit is free, then you only pay when you play.",
-    pN:"Sample rates — to be confirmed by the club.",
+    pN:"All players must sign the <a href=\"#engagement\">commitment form and code of conduct</a>.",
     eH:"Upcoming events", eN:"Sample events.",
     qH:"Frequently asked questions",
     q1:"I've never played. Can I come?", a1:"Absolutely! Come to a beginner session: a volunteer will explain the rules and you'll be playing within the first hour.",
     q5:"How much does it cost?", a5:"Your first visit is free. After that, you pay per session, with no membership or commitment.",
-    q2:"What should I bring?", a2:"Non-marking indoor sports shoes and a water bottle. Paddles and balls are lent to new players.",
+    q6:"Do I need to sign a form?", a6:"Yes. Every player must read and sign the <a href=\"#engagement\">commitment form and code of conduct</a> before playing. For a minor, a parent or guardian also signs.",
+    q2:"What should I bring?", a2:"Protective eyewear for racquet sports (mandatory), a clean pair of non-marking indoor shoes (no playing in outdoor shoes) and a water bottle. Paddles and balls are lent to new players.",
     q3:"Do I need a partner?", a3:"No. During open play, players rotate and switch partners every game.",
     q4:"Is it a sport for all ages?", a4:"Yes. The court is small and rallies are easier on the joints than tennis, which makes it popular with every generation.",
     kH:"Contact us", kL:"A question, want to try it, or interested in volunteering? Write to us and a committee member will get back to you.",
-    kA:"Maniwaki (Quebec)", 
+    
     lN:"Name", lE:"Email", lS:"I'd like to…", lM:"Message",
     o1:"Try pickleball", o2:"Know the schedule and rates", o3:"Volunteer", o4:"Other question",
     bS:"Send",
     ok:"Thank you! Your message has been sent. We'll get back to you soon.",
-    foot:"Footer"
+    foot:"Footer",
+    tH:"Tips and tricks", tL:"A few pointers to improve quickly, whether you've been playing for a week or a year.",
+    t1h:"Stay ready", t1p:"Paddle up in front of you, knees slightly bent, weight on the balls of your feet. You'll react much faster.", t2h:"Get to the kitchen line", t2p:"After the return of serve, move up to the non-volley line. That's where most points are won.", t3h:"Return deep", t3p:"A deep return of serve keeps your opponents at the baseline and gives you time to move up.", t4h:"Master the dink", t4p:"The dink is a soft shot that lands in your opponents' kitchen. Be patient: wait for a high ball before attacking.", t5h:"The third-shot drop", t5p:"The serving team often plays a soft shot into the opponents' kitchen so they can move up to the net.", t6h:"Aim at the feet", t6p:"A low ball at your opponent's feet is very hard to attack.", t7h:"Talk to each other", t7p:"\"Mine!\", \"Yours!\", \"Out!\": communicate on every ball. Down the middle, the forehand usually takes it.", t8h:"Move together", t8p:"Move up and back with your partner as if tied by a rope, so you don't leave a gap in the middle.",
+    gH:"Commitment form and code of conduct", gL:"Every player must read and sign this form before playing. Print it, sign it and hand it to an organizer at your first session.",
+    g1:"<b>Protective eyewear</b> mandatory on the court", g2:"Clean, non-marking <b>indoor shoes</b> — no outdoor shoes on the courts",
+    g3:"<b>Arrive 15 minutes early</b> and report absences 24 hours in advance", g4:"<b>Honest line calls</b>: when in doubt, the point goes to the opponent",
+    gP:"Download (PDF)", gW:"Download (Word)", gN:"The form is bilingual (French and English). For a minor, a parent or guardian must also sign."
   };
   const TXT = {
     fr:{err:"Veuillez indiquer votre nom et une adresse courriel valide.", sending:"Envoi…", fail:"Le message n'a pas pu être envoyé d'ici. Écrivez-nous directement à ", failLink:"ouvrir votre courriel", detail:"Détail :", btn:"EN", btnL:"English version", title:"Pickleball Maniwaki — Club de pickleball"},
@@ -382,16 +447,10 @@ footer .copy{width:100%;font-size:14px;border-top:1px solid #1d3463;padding-top:
   };
   const SCHED = {
     hiver: [
-      [["Lun · 18 h 30","Mon · 6:30 pm"],["Parties libres","Open play"],["Gymnase — lieu à confirmer","Gym — location TBC"],"ouv",["Tous niveaux","All levels"]],
-      [["Mer · 9 h 00","Wed · 9:00 am"],["Matinée du club","Club morning"],["Gymnase — lieu à confirmer","Gym — location TBC"],"int",["Intermédiaire","Intermediate"]],
-      [["Jeu · 18 h 30","Thu · 6:30 pm"],["Initiation","Beginner session"],["Prêt de raquettes inclus","Loaner paddles included"],"deb",["Débutants","Beginners"]],
-      [["Sam · 10 h 00","Sat · 10:00 am"],["Parties libres","Open play"],["Gymnase — lieu à confirmer","Gym — location TBC"],"ouv",["Tous niveaux","All levels"]]
+      [["Mardi · 19 h – 21 h","Tuesday · 7–9 pm"],["Parties libres","Open play"],["Cité étudiante de la Haute-Gatineau","Cité étudiante de la Haute-Gatineau"],"ouv",["Tous niveaux","All levels"]]
     ],
     ete: [
-      [["Mar · 18 h 00","Tue · 6:00 pm"],["Parties libres","Open play"],["Terrains extérieurs — lieu à confirmer","Outdoor courts — location TBC"],"ouv",["Tous niveaux","All levels"]],
-      [["Mer · 9 h 00","Wed · 9:00 am"],["Matinée du club","Club morning"],["Terrains extérieurs","Outdoor courts"],"int",["Intermédiaire","Intermediate"]],
-      [["Jeu · 18 h 00","Thu · 6:00 pm"],["Initiation","Beginner session"],["Prêt de raquettes inclus","Loaner paddles included"],"deb",["Débutants","Beginners"]],
-      [["Dim · 9 h 30","Sun · 9:30 am"],["Parties libres","Open play"],["Terrains extérieurs","Outdoor courts"],"ouv",["Tous niveaux","All levels"]]
+      [["À déterminer","To be determined"],["Horaire d'été à venir","Summer schedule coming soon"],["Restez à l'affût!","Stay tuned!"],"ouv",["Bientôt","Coming soon"]]
     ]
   };
   const PLANS = [
@@ -455,7 +514,7 @@ footer .copy{width:100%;font-size:14px;border-top:1px solid #1d3463;padding-top:
   mb.addEventListener('click', () => { const o = nav.classList.toggle('open'); mb.setAttribute('aria-expanded', o); });
   document.querySelectorAll('#links a').forEach(a => a.addEventListener('click', () => { nav.classList.remove('open'); mb.setAttribute('aria-expanded', false); }));
 
-  const MAIL = 'pickleballmaniwaki@proton.me';
+  const MAIL = 'pickleballmaniwaki@mail.com';
   // Clé Web3Forms (reçue par courriel sur web3forms.com). Vide = FormSubmit.
   const W3F_KEY = 'f518fd7a-3a0c-4bac-be05-2547a474a8dd';
   const form = document.getElementById('form');
